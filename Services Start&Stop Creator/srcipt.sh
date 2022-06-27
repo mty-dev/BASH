@@ -7,7 +7,7 @@ echo "#########################################"
 
 #QUESTION ABOUT SERVICES
 echo "Enter name of services:"
-echo "Remember about good sequence"
+echo "Remember about good sequence!"
 echo "EXAMPLE: apache2 mysqld network"
 read -a services
 sleep 1
@@ -23,6 +23,7 @@ echo ""
 echo "Path saved."
 echo ""
 
+#FUNCTION WHERE WE ARE CREATING START SERVICES SCRIPT FILE
 fun_start ()
 {
   echo "#!/bin/bash" > $path/services-start.sh
@@ -33,7 +34,7 @@ fun_start ()
     done
 }
 
-
+#FUNCTION WHERE WE ARE CREATING STOP SERVICES SCRIPT FILE
 fun_stop ()
 {
   echo "#!/bin/bash" > $path/services-stop.sh
