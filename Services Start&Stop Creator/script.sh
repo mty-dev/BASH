@@ -26,7 +26,7 @@ echo ""
 
 cat << EOF > $path
 
-#! /bin/bash
+#!/bin/bash
 
 action='status'
 
