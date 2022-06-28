@@ -60,4 +60,8 @@ while [ $# -gt 0 ]; do
   esac
   shift
 done
+
+for i in ${!services[@]}; do
+  [[ -n "${!services[i]}" ]]         && echo "==> ${!services[i]} - $action"          && /bin/systemctl  $action ${!services[i]}
+done
 EOF
