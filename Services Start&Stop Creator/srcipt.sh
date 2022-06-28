@@ -1,4 +1,4 @@
-#!/bin/bash
+#! /bin/bash
 
 #ENTRY 
 echo "#########################################"
@@ -15,32 +15,48 @@ echo "Name of services saved."
 echo " "
 
 #QUESTION ABOUT DIRECTORY TO CREATE SCRIPT FILES
-echo "Enter directory to create script files:"
-echo "EXAMPLE: /home/root"
+echo "Enter directory and name to script file:"
+echo "EXAMPLE: /home/user/adminserver.sh"
+echo "Remember about right file extension!"
 read path
 sleep 1
 echo ""
-echo "Path saved."
+echo "P"
 echo ""
 
-#FUNCTION WHERE WE ARE CREATING START SERVICES SCRIPT FILE
-fun_start ()
-{
-  echo "#!/bin/bash" > $path/services-start.sh
-  
-  for i in ${!services[@]}; 
-    do
-      echo "systemctl ${myArray[i]} start" > $path/services-start.sh
-    done
-}
+cat << EOF >> $path
 
-#FUNCTION WHERE WE ARE CREATING STOP SERVICES SCRIPT FILE
-fun_stop ()
-{
-  echo "#!/bin/bash" > $path/services-stop.sh
-  
-  for i in ${!services[@]}; 
-    do
-      echo "systemctl ${myArray[i]} stop" > $path/services-stop.sh
+#! /bin/bash
+
+action='status'
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --status)
+      action='status'
+      ;;
+    --stop)
+      action='stop'
+      ;;
+    --start)
+      action='start'
+      ;;
+    --restart)
+      action='restart'
+      ;;
+    for i in ${!services[@]}; do
+      --${myArray[$i]})
+        ${myArray[$i]}="true"
+        ;;        
     done
-}
+    --all)
+      for i in ${!services[@]}; do
+        ${myArray[$i]}="true"
+        ;;
+      done
+    *)
+      echo "Not known argument: ${1}" >&2
+      exit 1
+  esac
+  shift
+done
