@@ -24,7 +24,7 @@ echo ""
 echo "P"
 echo ""
 
-cat << EOF >> $path
+cat << EOF > $path
 
 #! /bin/bash
 
