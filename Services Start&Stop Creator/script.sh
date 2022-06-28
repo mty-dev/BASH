@@ -54,6 +54,14 @@ while [ $# -gt 0 ]; do
         ${myArray[$i]}="true"
         ;;
       done
+    --help)
+      echo "
+      ./$path [services] [--status|--stop|--start|--restart]
+      
+      List of services:
+      ${!services[@]}
+      "
+      ;;
     *)
       echo "Not known argument: ${1}" >&2
       exit 1
