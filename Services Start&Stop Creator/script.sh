@@ -20,18 +20,14 @@ echo "EXAMPLE: /home/user/adminserver.sh"
 echo "Remember about right file extension!"
 read path
 sleep 1
-echo ""
-echo "P"
-echo ""
+echo " "
+
 
 cat << EOF > $path
-
 #!/bin/bash
-
 action='status'
-
-while [ $# -gt 0 ]; do
-  case "$1" in
+while [ \$# -gt 0 ]; do
+  case "\$1" in
     --status)
       action='status'
       ;;
@@ -44,32 +40,36 @@ while [ $# -gt 0 ]; do
     --restart)
       action='restart'
       ;;
-    for i in ${!services[@]}; do
-      --${myArray[$i]})
-        ${myArray[$i]}="true"
-        ;;        
-    done
+$(for i in ${!services[@]}; do
+    echo "
+    --${services[$i]})
+      ${services[$i]}=true
+      ;;"
+done)
     --all)
-      for i in ${!services[@]}; do
-        ${myArray[$i]}="true"
-        ;;
-      done
+$(for i in ${!services[@]}; do
+echo "
+      ${services[$i]}=true
+"
+done)
+    ;;
     --help)
       echo "
-      ./$path [services] [--status|--stop|--start|--restart]
+      $path [--service|--all] [--status|--stop|--start|--restart]
       
       List of services:
-      ${!services[@]}
+      ${services[@]}
       "
       ;;
     *)
-      echo "Not known argument: ${1}" >&2
+      echo "Not known argument: \${1}" >&2
       exit 1
   esac
   shift
 done
-
-for i in ${!services[@]}; do
-  [[ -n "${!services[i]}" ]]         && echo "==> ${!services[i]} - $action"          && /bin/systemctl  $action ${!services[i]}
-done
+$(for i in ${!services[@]}; do
+echo "[[ -n \"\$${services[i]}\" ]]         && echo \"==> ${services[i]} - \$action\"          && /bin/systemctl  \$action ${services[i]}"
+done)
 EOF
+
+chmod u+x $path
